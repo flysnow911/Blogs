@@ -1,14 +1,14 @@
-InvocationHandler ÔõÃ´ÀÏÊÇÄã£¿   
-½ñÈÕĞ¡”]ÁËÏÂmybatisµÄ²å¼ş¹¦ÄÜ£¬±¾×ÅÕı±¾ÇåÔ´µÄ¾«Éñ£¬¿´ÁËÏÂpluginµÄÔ´Âë£¬ÓÖ¿´µ½ÁËInvocationHandler£¬¿´À´plugin¹¦ÄÜÒ²ÊÇÕ¾ÔÚÁËInvocationHandlerµÄ¼ç°òÉÏ£¡   
-ÏÈËµÏÂPluginµÄ¿ª·¢°É¡£ °Ñ´óÏó×°½ø±ùÏäÓĞÈı²½Öè£¬¿ª·¢PluginÒ²Ö»ÓĞÈı²½Öè£º   
-1.±àĞ´×Ô¼ºµÄpluginÀà£¬ÊµÏÖMybatisµÄInterceptor½Ó¿Ú¡£   
-2.¸´Ğ´intercept,plugin,setProperties·½·¨£¬¼ÓÉÏ@Intercepts @Signature×¢½â£¬¸æËßmybatisĞèÒªÀ¹½ØÄÇĞ©Àà£¬ÄÇĞ©·½·¨¡£   
-3.ÔÚmybatis-config.xml×¢²á×Ô¼ºµÄplugin¡£   
+InvocationHandler æ€ä¹ˆè€æ˜¯ä½ ï¼Ÿ   
+ä»Šæ—¥å°æ“¼äº†ä¸‹mybatisçš„æ’ä»¶åŠŸèƒ½ï¼Œæœ¬ç€æ­£æœ¬æ¸…æºçš„ç²¾ç¥ï¼Œçœ‹äº†ä¸‹pluginçš„æºç ï¼Œåˆçœ‹åˆ°äº†InvocationHandlerï¼Œçœ‹æ¥pluginåŠŸèƒ½ä¹Ÿæ˜¯ç«™åœ¨äº†InvocationHandlerçš„è‚©è†€ä¸Šï¼   
+å…ˆè¯´ä¸‹Pluginçš„å¼€å‘å§ã€‚ æŠŠå¤§è±¡è£…è¿›å†°ç®±æœ‰ä¸‰æ­¥éª¤ï¼Œå¼€å‘Pluginä¹Ÿåªæœ‰ä¸‰æ­¥éª¤ï¼š   
+1.ç¼–å†™è‡ªå·±çš„pluginç±»ï¼Œå®ç°Mybatisçš„Interceptoræ¥å£ã€‚   
+2.å¤å†™intercept,plugin,setPropertiesæ–¹æ³•ï¼ŒåŠ ä¸Š@Intercepts @Signatureæ³¨è§£ï¼Œå‘Šè¯‰mybatiséœ€è¦æ‹¦æˆªé‚£äº›ç±»ï¼Œé‚£äº›æ–¹æ³•ã€‚   
+3.åœ¨mybatis-config.xmlæ³¨å†Œè‡ªå·±çš„pluginã€‚   
 
-ºÃÁË£¬¿ªÊ¼Õı±¾ÇåÔ´ÁË¡£ XMLConfigBuilder.java line:110£¬ ½âÎöxmlÖĞ ×¢²áµÄplugins
+å¥½äº†ï¼Œå¼€å§‹æ­£æœ¬æ¸…æºäº†ã€‚ XMLConfigBuilder.java line:110ï¼Œ è§£æxmlä¸­ æ³¨å†Œçš„plugins
 `pluginElement(root.evalNode("plugins"));`
 
-line:183,¾ÍÊÇ¾ßÌå½âÎöplugins
+line:183,å°±æ˜¯å…·ä½“è§£æplugins
 `     
 	
 	private void pluginElement(XNode parent) throws Exception {
@@ -23,8 +23,8 @@ line:183,¾ÍÊÇ¾ßÌå½âÎöplugins
      	 }
     }  
 
-Éú³É×¢²áµÄinterceptorÊµÀı£¬¼ÓÈëconfgiurationµÄintercetorChainÖĞ¡£ Õâ¾ÍÍê³ÉÁË×Ô¶¨Òå²å¼şµÄ×¢²áºÍÊµÀı»¯¡£
-ÔÚintercetorChainÖĞ£¬Éú³ÉËùÓĞÕâĞ©¶¯Ì¬´úÀíµÄÊµÀı£º
+ç”Ÿæˆæ³¨å†Œçš„interceptorå®ä¾‹ï¼ŒåŠ å…¥confgiurationçš„intercetorChainä¸­ã€‚ è¿™å°±å®Œæˆäº†è‡ªå®šä¹‰æ’ä»¶çš„æ³¨å†Œå’Œå®ä¾‹åŒ–ã€‚
+åœ¨intercetorChainä¸­ï¼Œç”Ÿæˆæ‰€æœ‰è¿™äº›åŠ¨æ€ä»£ç†çš„å®ä¾‹ï¼š
 `
 
     public class InterceptorChain {
@@ -35,26 +35,26 @@ line:183,¾ÍÊÇ¾ßÌå½âÎöplugins
         }
         return target;
       }`   
-×¢ÒâÉÏÃæµÄ·½·¨ÖĞ£¬ÊìÏ¤µÄ**ÔğÈÎÁ´**£¬interceptor.plugin(target);ÊÇ¸øtargetÉú³ÉÒ»¸ö´úÀí£¬Ñ­»·µÄµ÷ÓÃinterceptor.plugin()µÄ»°£¬¾ÍÊÇ¸øtargetÉú³É¶à¸ö¶¯Ì¬´úÀí´úÀí£¡Èç¹ûÎÒÃÇ´´½¨Á½¸öplugin,¾ÍÊÇ¸øtarget´´½¨Á½²ãµÄ´úÀí£¬Ò²¾ÍÊÇÀ¹½ØÁËÁ½²ã£¡ 
+æ³¨æ„ä¸Šé¢çš„æ–¹æ³•ä¸­ï¼Œç†Ÿæ‚‰çš„**è´£ä»»é“¾**ï¼Œinterceptor.plugin(target);æ˜¯ç»™targetç”Ÿæˆä¸€ä¸ªä»£ç†ï¼Œå¾ªç¯çš„è°ƒç”¨interceptor.plugin()çš„è¯ï¼Œå°±æ˜¯ç»™targetç”Ÿæˆå¤šä¸ªåŠ¨æ€ä»£ç†ä»£ç†ï¼å¦‚æœæˆ‘ä»¬åˆ›å»ºä¸¤ä¸ªplugin,å°±æ˜¯ç»™targetåˆ›å»ºä¸¤å±‚çš„ä»£ç†ï¼Œä¹Ÿå°±æ˜¯æ‹¦æˆªäº†ä¸¤å±‚ï¼ 
 
 
-ÔÙ¿´ÏÂ×Ô¶¨Òå²å¼ş¸²Ğ´µÄ¼¸¸ö·½·¨£º
+å†çœ‹ä¸‹è‡ªå®šä¹‰æ’ä»¶è¦†å†™çš„å‡ ä¸ªæ–¹æ³•ï¼š
 
-	Object intercept(Invocation invocation)  //ÕâÀïÃæĞ´²å¼ş¾ßÌåÒª¸ÉÉ¶£¬±ÈÈç¡°ÊÕ¸ö±£»¤·Ñ¡±£¬¡°´òÓ¡¸ösql¡±¡£    
-	Object plugin(Object target);     // ÕâÀïÃæĞ´µÄÊÇºÎÊ±´¥·¢intercept£¬ÕâÊÇºËĞÄ£¡    
-	void setProperties(Properteis p)  // Õâ¸ö°ÑÅäÖÃµÄpropertiesÉèÖÃµ½²å¼şÊµÀıÖĞ¡£
-ÏÈÀ´·ÖÎöÏÂplugin·½·¨£¬Ò»°ãµÄÊµÏÖÈçÏÂ£º 
+	Object intercept(Invocation invocation)  //è¿™é‡Œé¢å†™æ’ä»¶å…·ä½“è¦å¹²å•¥ï¼Œæ¯”å¦‚â€œæ”¶ä¸ªä¿æŠ¤è´¹â€ï¼Œâ€œæ‰“å°ä¸ªsqlâ€ã€‚    
+	Object plugin(Object target);     // è¿™é‡Œé¢å†™çš„æ˜¯ä½•æ—¶è§¦å‘interceptï¼Œè¿™æ˜¯æ ¸å¿ƒï¼    
+	void setProperties(Properteis p)  // è¿™ä¸ªæŠŠé…ç½®çš„propertiesè®¾ç½®åˆ°æ’ä»¶å®ä¾‹ä¸­ã€‚
+å…ˆæ¥åˆ†æä¸‹pluginæ–¹æ³•ï¼Œä¸€èˆ¬çš„å®ç°å¦‚ä¸‹ï¼š 
 	
 	@Override   
 	public Object plugin(Object target) {   
 		return Plugin.wrap(target, this);   
 	}
 
-¿´ÏÂPlugin.wrap·½·¨£¬¾Í¶®ÁËÒ»ÇĞ£º
+çœ‹ä¸‹Plugin.wrapæ–¹æ³•ï¼Œå°±æ‡‚äº†ä¸€åˆ‡ï¼š
 
-`public class Plugin implements InvocationHandler { //ÊµÏÖINvocationHandler½Ó¿Ú! `
+`public class Plugin implements InvocationHandler { //å®ç°INvocationHandleræ¥å£! `
 
-¸²Ğ´invoke·½·¨!
+è¦†å†™invokeæ–¹æ³•!
 `   
 
 	@Override
@@ -68,7 +68,7 @@ line:183,¾ÍÊÇ¾ßÌå½âÎöplugins
 		  } catch (Exception e) {  
 		  throw ExceptionUtil.unwrapThrowable(e);  }
 		  }`
-ÓÃProxy.newInstanceÉú³É´úÀíÊµÀı£¡
+ç”¨Proxy.newInstanceç”Ÿæˆä»£ç†å®ä¾‹ï¼
 
 
 	public static Object wrap(Object target, Interceptor interceptor) {
@@ -83,4 +83,4 @@ line:183,¾ÍÊÇ¾ßÌå½âÎöplugins
 		}   
 	return target;}   
 	
-Ô­À´»¹ÊÇ¶¯Ì¬´úÀíÄÇÒ»Ì×°¡!! 
+åŸæ¥è¿˜æ˜¯åŠ¨æ€ä»£ç†é‚£ä¸€å¥—å•Š!!  
