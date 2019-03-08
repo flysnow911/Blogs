@@ -1,19 +1,19 @@
-### ´ÓMybatisÖÐsqlÖ´ÐÐÁ÷³ÌÄÜ¿´³ö£¬sqlsessionÊÇsqlÖ´ÐÐµÄ¹Ø¼ü¶ÔÏó£¬²¢ÇÒËû¹ÜÀí×ÅÊý¾Ý·ÃÎÊµÄ»á»°Ïà¹ØÊý¾Ý¡£¼ÈÈ»Óë»á»°Ïà¹Ø£¬ÄÇÈçºÎ±£Ö¤SqlSessionµÄÏß³Ì°²È«ÄØ£¿
-### Ò»°ãÎÒÃÇcoding,×î¼òµ¥µÄÏß³Ì°²È«·½·¨ÊÇÊ²Ã´£¿
->ThreadLocal.java¡£
+### ä»ŽMybatisä¸­sqlæ‰§è¡Œæµç¨‹èƒ½çœ‹å‡ºï¼Œsqlsessionæ˜¯sqlæ‰§è¡Œçš„å…³é”®å¯¹è±¡ï¼Œå¹¶ä¸”ä»–ç®¡ç†ç€æ•°æ®è®¿é—®çš„ä¼šè¯ç›¸å…³æ•°æ®ã€‚æ—¢ç„¶ä¸Žä¼šè¯ç›¸å…³ï¼Œé‚£å¦‚ä½•ä¿è¯SqlSessionçš„çº¿ç¨‹å®‰å…¨å‘¢ï¼Ÿ
+### ä¸€èˆ¬æˆ‘ä»¬coding,æœ€ç®€å•çš„çº¿ç¨‹å®‰å…¨æ–¹æ³•æ˜¯ä»€ä¹ˆï¼Ÿ
+>ThreadLocal.javaã€‚
 
-### ÄÇMybatisÈçºÎ±£Ö¤SQLSessionµÄÏß³Ì°²È«£¿
->´ð°¸£ºSqlSessionManager.java¿ÉÒÔ±£Ö¤Ïß³Ì°²È«¡£
+### é‚£Mybatiså¦‚ä½•ä¿è¯SQLSessionçš„çº¿ç¨‹å®‰å…¨ï¼Ÿ
+>ç­”æ¡ˆï¼šSqlSessionManager.javaå¯ä»¥ä¿è¯çº¿ç¨‹å®‰å…¨ã€‚
 >line40: private final ThreadLocal<SqlSession> localSqlSession = new ThreadLocal<>();  
 >line42: private SqlSessionManager(SqlSessionFactory sqlSessionFactory )
->¿´µ½ÕâÁ½ÐÐ¾ÍÃë¶®ÁË£¬Ê×ÏÈSqlSessionManagerÊÇµ¥ÀýµÄ£¬Æä´ÎËûÀûÓÃthreadLocalÀ´¹ÜsqlSession¡£  
->µ«ÊÇ£¬SqlSessionManager.javaÒÑ¾­±»·ÏÆú¡£ÏÖÔÚÉú²úsqlSessionµÄÀàÊÇDefaultSessionFactoryÉú²údefaultSession£¬µ«²¢²»ÊÇÏß³Ì°²È«
->µÄ¡£ËùÒÔ£¬Ô­ÉúµÄMybatisÊÇ²»ÄÜÌá¹©Ïß³Ì°²È«µÄsqlsessionµÄ£¬Ö»ÄÜ×Ô¼º¶¯ÊÖ¡£  
+>çœ‹åˆ°è¿™ä¸¤è¡Œå°±ç§’æ‡‚äº†ï¼Œé¦–å…ˆSqlSessionManageræ˜¯å•ä¾‹çš„ï¼Œå…¶æ¬¡ä»–åˆ©ç”¨threadLocalæ¥ç®¡sqlSessionã€‚  
+>ä½†æ˜¯ï¼ŒSqlSessionManager.javaå·²ç»è¢«åºŸå¼ƒã€‚çŽ°åœ¨ç”Ÿäº§sqlSessionçš„ç±»æ˜¯DefaultSessionFactoryç”Ÿäº§defaultSessionï¼Œä½†å¹¶ä¸æ˜¯çº¿ç¨‹å®‰å…¨
+>çš„ã€‚æ‰€ä»¥ï¼ŒåŽŸç”Ÿçš„Mybatisæ˜¯ä¸èƒ½æä¾›çº¿ç¨‹å®‰å…¨çš„sqlsessionçš„ï¼Œåªèƒ½è‡ªå·±åŠ¨æ‰‹ã€‚  
 
-### ÎÒÃÇÆ½Ê±coding£¬²¢Ã»ÓÐ¿ÌÒâÈ¥Î¬»¤sessionµÄÏß³Ì°²È«£¬ÊÇÔõÃ´»ØÊÂÄØ£¿
->ÒòÎªÎÒÃÇÓÐspring-mybatis.jarµÄSqlSessionTemplate¡£
->localSqlSession°üº¬Ò»¸öË½ÓÐÄÚ²¿ÀàSqlSessionInteceptor.java£¬ÊµÏÖ¶ÔSqlsessionFactory.javaµÄ¶¯Ì¬´úÀí£¬ÔÚinvoke·½·¨ÖÐÉú³ÉÌá¹©>sqlsessionµÄÊµÀý¡£SqlSessionTemplate.javaÓÉTransactionSyncnazationManager.javaÒÀ¾ÝspringÏß³ÌµÄÉÏÏÂÎÄÉú³ÉÏß³Ì°²È« 
->sqlSession£¬·ÅÔÚÊÂÎñÍ¬²½¹ÜÀíÀàµÄ×ÊÔ´ÖÐ£¬²¢ÇÒÓÉSqlSessionUtilsÍ¨¹ýSqlSessionµÄÒýÓÃ¼ÆÊýÀ´¹ÜÀísqlSession£¬ÈçsessionµÄ´ò¿ªºÍ¹Ø±Õ²Ù>×÷¡£ÕâÑù×öµÄºÃ´¦ÊÇ£¬SqlSessionTemplateÓÐ×Å¸üºÃµÄÓëspringµÄÅäºÏ£¬²¢ÇÒ¹ÜÀí¹ÜÀísqlsessiong¸ü¸ßÐ§¡£  
+### æˆ‘ä»¬å¹³æ—¶codingï¼Œå¹¶æ²¡æœ‰åˆ»æ„åŽ»ç»´æŠ¤sessionçš„çº¿ç¨‹å®‰å…¨ï¼Œæ˜¯æ€Žä¹ˆå›žäº‹å‘¢ï¼Ÿ
+>å› ä¸ºæˆ‘ä»¬æœ‰spring-mybatis.jarçš„SqlSessionTemplateã€‚
+>localSqlSessionåŒ…å«ä¸€ä¸ªç§æœ‰å†…éƒ¨ç±»SqlSessionInteceptor.javaï¼Œå®žçŽ°å¯¹SqlsessionFactory.javaçš„åŠ¨æ€ä»£ç†ï¼Œåœ¨invokeæ–¹æ³•ä¸­ç”Ÿæˆæä¾›>sqlsessionçš„å®žä¾‹ã€‚SqlSessionTemplate.javaç”±TransactionSyncnazationManager.javaä¾æ®springçº¿ç¨‹çš„ä¸Šä¸‹æ–‡ç”Ÿæˆçº¿ç¨‹å®‰å…¨ 
+>sqlSessionï¼Œæ”¾åœ¨äº‹åŠ¡åŒæ­¥ç®¡ç†ç±»çš„èµ„æºä¸­ï¼Œå¹¶ä¸”ç”±SqlSessionUtilsé€šè¿‡SqlSessionçš„å¼•ç”¨è®¡æ•°æ¥ç®¡ç†sqlSessionï¼Œå¦‚sessionçš„æ‰“å¼€å’Œå…³é—­æ“>ä½œã€‚è¿™æ ·åšçš„å¥½å¤„æ˜¯ï¼ŒSqlSessionTemplateæœ‰ç€æ›´å¥½çš„ä¸Žspringçš„é…åˆï¼Œå¹¶ä¸”ç®¡ç†ç®¡ç†sqlsessiongæ›´é«˜æ•ˆã€‚  
 
-### Ô­ÉúmybatisÖÐ,SqlSessionManager.java¿ÉÒÔÉú²úÏß³Ì°²È«µÄsqlsession¡£ÎªºÎspring²»ÓÃ£¿
->¶Ô±ÈÁËSqlSessionManagerºÍSqlSessionTemplateÁ½¸öÀà£¬ÔÚ¹ÜÀísqlSessionµÄ¹¦ÄÜÖÐ£¬Á½¸öÀà¼«ÆäÏàËÆ£¬¶¼°üº¬Ò»¸öË½ÓÐÄÚ²¿Àà>SqlSessionInteceptor.java£¬ÊµÏÖ¶ÔSqlsessionFactory.javaµÄ¶¯Ì¬´úÀí£¬ÔÚinvoke·½·¨ÖÐÉú³ÉÌá¹©sqlsessionµÄÊµÀý¡£²»Í¬µÄÊÇ£¬>SqlSessionManagerÖ±½Ó¹ÜÀí×Å³ÉÔ±±äÁ¿localSqlSession£¬ ¶øSqlSessionTemplateÓÉÔòTransactionSyncnazationManager.javaÉú³ÉÒÀ¾Ý>springÏß³ÌµÄÉÏÏÂÎÄÏß³Ì°²È«µÄsqlSession£¬·ÅÔÚÊÂÎñÍ¬²½¹ÜÀíÀàµÄ×ÊÔ´ÖÐ£¬²¢ÇÒÓÉSqlSessionUtilsÍ¨¹ýSqlSessionµÄÒýÓÃ¼ÆÊýÀ´¹ÜÀí>sqlSession£¬ÈçsessionµÄ´ò¿ªºÍ¹Ø±Õ²Ù×÷¡£ÕâÑù×öµÄºÃ´¦ÊÇ£¬SqlSessionTemplateÓÐ×Å¸üºÃµÄÓëspringµÄÅäºÏ£¬²¢ÇÒ¹ÜÀí¹ÜÀísqlsessiong¸ü¸ß>Ð§¡£
+### åŽŸç”Ÿmybatisä¸­,SqlSessionManager.javaå¯ä»¥ç”Ÿäº§çº¿ç¨‹å®‰å…¨çš„sqlsessionã€‚ä¸ºä½•springä¸ç”¨ï¼Ÿ
+>å¯¹æ¯”äº†SqlSessionManagerå’ŒSqlSessionTemplateä¸¤ä¸ªç±»ï¼Œåœ¨ç®¡ç†sqlSessionçš„åŠŸèƒ½ä¸­ï¼Œä¸¤ä¸ªç±»æžå…¶ç›¸ä¼¼ï¼Œéƒ½åŒ…å«ä¸€ä¸ªç§æœ‰å†…éƒ¨ç±»>SqlSessionInteceptor.javaï¼Œå®žçŽ°å¯¹SqlsessionFactory.javaçš„åŠ¨æ€ä»£ç†ï¼Œåœ¨invokeæ–¹æ³•ä¸­ç”Ÿæˆæä¾›sqlsessionçš„å®žä¾‹ã€‚ä¸åŒçš„æ˜¯ï¼Œ>SqlSessionManagerç›´æŽ¥ç®¡ç†ç€æˆå‘˜å˜é‡localSqlSessionï¼Œ è€ŒSqlSessionTemplateç”±åˆ™TransactionSyncnazationManager.javaç”Ÿæˆä¾æ®>springçº¿ç¨‹çš„ä¸Šä¸‹æ–‡çº¿ç¨‹å®‰å…¨çš„sqlSessionï¼Œæ”¾åœ¨äº‹åŠ¡åŒæ­¥ç®¡ç†ç±»çš„èµ„æºä¸­ï¼Œå¹¶ä¸”ç”±SqlSessionUtilsé€šè¿‡SqlSessionçš„å¼•ç”¨è®¡æ•°æ¥ç®¡ç†>sqlSessionï¼Œå¦‚sessionçš„æ‰“å¼€å’Œå…³é—­æ“ä½œã€‚è¿™æ ·åšçš„å¥½å¤„æ˜¯ï¼ŒSqlSessionTemplateæœ‰ç€æ›´å¥½çš„ä¸Žspringçš„é…åˆï¼Œå¹¶ä¸”ç®¡ç†ç®¡ç†sqlsessiongæ›´é«˜>æ•ˆã€‚  
