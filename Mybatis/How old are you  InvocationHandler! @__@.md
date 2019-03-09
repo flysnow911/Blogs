@@ -36,7 +36,8 @@ line:183,就是具体解析plugins
         return target;
       }`   
 注意上面的方法中，熟悉的**责任链**，interceptor.plugin(target);是给target生成一个代理，循环的调用interceptor.plugin()的话，就是给target生成多个动态代理代理！如果我们创建两个plugin,就是给target创建两层的代理，也就是拦截了两层！ 
-
+要拦截N次，就拦截N次！
+[![插件拦截原理](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/plugins.png "插件拦截原理")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/plugins.png "插件拦截原理")
 
 再看下自定义插件覆写的几个方法：
 
