@@ -18,7 +18,7 @@ Mybatis有大量的类元数据的配置，依赖这些元数据创建类的实�
 
 ##### 会话模块Seesion    
 提供api接口。   
-[![png](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/session.png "png")](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/session.png "png")
+[![session](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/session.png "session")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/session.png "session")
 ##### 日志模块 Logging
 主要功能是集成外部日志框架.  
 [![](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/logging.png)](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/logging.png)
@@ -26,7 +26,7 @@ Mybatis有大量的类元数据的配置，依赖这些元数据创建类的实�
 ##### IO模块  
 资源加载模块，主要是对类加载器进行封装，确定类加载器的使用顺序，并提
 供了加载类文件以及其他资源文件的功能。   
-[![io](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/io.png "io")](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/io.png "io")
+[![io](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/io.png "io")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/io.png "io")
 
 ##### 解析器模块 parsing      
 
@@ -91,7 +91,7 @@ ResultSetHandler 完成结果集的映射，得到结果对象并返回。
 ##### 插件plugin
 
 满足用户自定义开发的需求   
-
+[![plugins](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/plugins "plugins")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/plugins "plugins")
 
 
 
