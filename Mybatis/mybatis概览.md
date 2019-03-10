@@ -10,53 +10,48 @@ Mybatis有大量的类元数据的配置，依赖这些元数据创建类的实�
 [![reflection](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/reflection.png "reflection")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/reflection.png "reflection")   
 
 ##### Type 模块  
-(https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/type.png "type")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/type.png "type")      
+ 
 该模块定义了若干个TypeHandler，主要功能是java数据类型和jdbc数据类型相互转换。  
 给SQL设置参数时，java -> jdbc。  
 映射结果集时，jdbc->java。  
+[![Type](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/Type.png "Type")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/Type.png "Type")
 
-会话模块，提供api接口。
-
+##### 会话模块Seesion    
+提供api接口。   
+[![png](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/session.png "png")](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/session.png "png")
 ##### 日志模块 Logging
+主要功能是集成外部日志框架.  
+[![](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/logging.png)](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/logging.png)
 
-主要功能是集成外部日志框架.
-
-IO模块  
+##### IO模块  
 资源加载模块，主要是对类加载器进行封装，确定类加载器的使用顺序，并提
 供了加载类文件以及其他资源文件的功能。   
+[![io](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/io.png "io")](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/io.png "io")
 
 ##### 解析器模块 parsing      
 
 封装xpath解析代码，提供两个功能：
 
-1. 解析xml文件，如：mapper.xml, 
-
-mybatis-config.xml等。
+1. 解析xml文件，如：mapper.xml, mybatis-config.xml等。   
 
 2. 动态sql占位符支持。    
+[![](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/mapper.png)](https://github.com/flysnow911/Blogs/tree/master/Mybatis/images/mapper.png)
 
-##### 数据源模块
-
-datasource    
-封装了自身数据源的实现和第三方数据源实现的接口。
-##### 
-
-transaction模块   
-提供简单的事务控制的接口和实现，但因为一般都是和
-
-spring集成，用了spring的事务。   
+##### 数据源模块datasource    
+封装了自身数据源的实现和第三方数据源实现的接口。   
+[![datasource](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/datasource.png "datasource")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/datasource.png "datasource")
+##### transaction模块   
+提供简单的事务控制的接口和实现，但因为一般都是和spring集成，用了spring的事务。   
 
 ##### 缓存cache模块    
+提供缓存接口和不同策略的缓存实现。   
 
-提供缓存接口和
-
-不同策略的缓存实现。   
+[![cache](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/cache.png "cache")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/cache.png "cache")
 
 ##### Binding模块   
 
-用户通过bingding模块，实现
-
-dao定义的方法和配置文件中sql的绑定    
+用户通过bingding模块，实现dao定义的方法和配置文件中sql的绑定     
+[![binding](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/binding.png "binding")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/binding.png "binding")
 
 ##### 异常   
 
@@ -68,17 +63,14 @@ dao定义的方法和配置文件中sql的绑定
 
 ##### builder 和mapping 。
 
-builder主要是前期依靠parsing解
-
-析mybatis-config.xml, mapper.xml文件，配合mapping生成各种需要的对象，
-
-存在Configuration中。  
+builder主要是前期依靠parsing解析mybatis-config.xml, mapper.xml文件，配合mapping生成各种需要的对象，存在Configuration中。   
+[![builder](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/builder.png "builder")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/builder.png "builder")   
+[![mapping](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/mapping "mapping.png")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/mapping "mapping.png")
 
 ##### scripting 动态sql解析   
 
-动态sql的解析就靠
-
-它了。   
+动态sql的解析就靠它了。  
+[![scripting](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/scripting.png "scripting")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/scripting.png "scripting")
 
 ##### SQL 执行 Executor和Cursor
 
@@ -94,12 +86,12 @@ StatementHandler 首先通过 ParameterHandler 完成 SQL 语句的实参绑定�
 后通过 java.sql.Statement 对象执行 SQL 语句并得到结果集，最后通过 
 
 ResultSetHandler 完成结果集的映射，得到结果对象并返回。  
+[![execuotor](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/executor.png "execuotor")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/executor.png "execuotor")
 
 ##### 插件plugin
 
 满足用户自定义开发的需求   
 
-##### session 模块
 
 
 
