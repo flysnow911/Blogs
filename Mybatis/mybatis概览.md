@@ -91,7 +91,7 @@ ResultSetHandler 完成结果集的映射，得到结果对象并返回。
 ##### 插件plugin
 
 满足用户自定义开发的需求   
-[![plugins](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/plugins "plugins")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/plugins "plugins")
+[![plugins](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/plugins.png "plugins")](https://github.com/flysnow911/Blogs/blob/master/Mybatis/images/plugins.png "plugins")
 
 
 
