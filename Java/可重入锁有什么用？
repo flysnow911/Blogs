@@ -1,0 +1,28 @@
+上次把可重入锁ReentrantLock搞清了，突然有个问题：怎么用? 使用场景有哪些?
+由于Synconize也是可重入锁，所以Synconize使用的场合，ReentryLock都可以用，并且效率更高。
+使用场景一般有以下几种：
+1. 程序有状态执行，没拿到锁的忽略。
+		`private ReentrantLock lock = new ReentrantLock();
+		if(lock.lock()){ //如果已进入临界区，其它线程忽略，直接返回。
+				do();
+		}finally {
+			lock.unlock();
+		}`
+2. 程序有状态执行，没拿到锁的自旋等待执行
+	`	private ReentrantLock lock = new ReentrantLock();
+		lock.lock();//如果已进入临界区，其它线程忽悠，直接返回。
+		do();
+		lock.unlock();
+`
+3.程序有状态执行，没拿到锁的尝试等待执行		
+	`	try {
+			//如果已经被lock，尝试等待5s，看是否可以获得锁，如果5s后仍然无法,获得锁则返回false继续执行
+			if (lock.tryLock(5, TimeUnit.SECONDS)) { 
+				try {
+ 						do();
+				} finally {
+					lock.unlock();
+				}
+			}
+		} catch (InterruptedException e) {
+		}`
