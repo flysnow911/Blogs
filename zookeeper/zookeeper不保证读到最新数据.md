@@ -4,7 +4,7 @@ zk毕竟是分布式的，leader写成功后，最新数据在同步给follower,
 需要时间，并且如果遇到网络延时，导致短时间的不一致，所以并不保证每次读到最新数据，   
 只不过zk读多写少，所以我们平时用的时候并不关注这个问题。
 在zk的开发者文档也作出了解释：
-https://zookeeper.apache.org/doc/r3.1.2/zookeeperProgrammers.html#ch_zkGuarantees
+https://zookeeper.apache.org/doc/r3.1.2/zookeeperProgrammers.html#ch_zkGuarantees   
 在Consistency Guarantees章节中，原文如下：
 
 		`Sometimes developers mistakenly assume one other guarantee that ZooKeeper does not in fact make. This is:   
