@@ -16,3 +16,9 @@ B+树只需要找到范围的两个边界，然后遍历边界之间的叶子节
 [![B树按范围查找](https://github.com/flysnow911/Blogs/blob/master/imgs/B%2B%E6%A0%91%E6%8C%89%E5%8C%BA%E9%97%B4%E6%9F%A5%E6%89%BE.png "B+树按范围查找")](https://github.com/flysnow911/Blogs/blob/master/imgs/B%2B%E6%A0%91%E6%8C%89%E5%8C%BA%E9%97%B4%E6%9F%A5%E6%89%BE.png "B+树按范围查找")
 
 [![B树按范围查找](https://github.com/flysnow911/Blogs/blob/master/imgs/B%E6%A0%91%E6%8C%89%E5%8C%BA%E9%97%B4%E6%9F%A5%E6%89%BE.png "B树按范围查找")](https://github.com/flysnow911/Blogs/blob/master/imgs/B%E6%A0%91%E6%8C%89%E5%8C%BA%E9%97%B4%E6%9F%A5%E6%89%BE.png "B树按范围查找")
+
+补充下遍历的思路，四种主要的遍历思想为：
+前序遍历：根结点 ---> 左子树 ---> 右子树
+中序遍历：左子树---> 根结点 ---> 右子树
+后序遍历：左子树 ---> 右子树 ---> 根结点
+层次遍历：只需按层次遍历即可
