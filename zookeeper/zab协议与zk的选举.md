@@ -32,9 +32,9 @@ zk是基于paxos的分布式应用协调框架。但他的选举算法用的是�
 			如果没有收到所有竞选节点选票，就把已收到的选票轮询一遍，看是存在某个节点得到超过一半节点得支持，若存在，设置相应状态(leadding或following)。退出选举的自旋，否则自旋。
 	##### 3.4.0之后
 	选举类是FastleaderElection.java中,line：1025行开始，
-			当节点收到所有竞选节点的选票时，再次判断自己的选票是否正确，是则退出选举，设置相应状态(leadding或following)，退出选举的自旋。
-			FastleaderElection的算法有个好处，减少了节点超半数的判断，需要拿到全部选票，才做判断。这样的好处是更严谨。收敛速度不一定快。
-
+			当节点收到所有竞选节点的选票时，再次判断自己的选票是否正确，判断方法是通过轮询recvqueue中的选票，是否有比当前持有选票更优的选票，如果没有，则退出选举，设置相应状态(leadding或following)，退出选举的自旋。否则不改变状态，仍然为looking状态，再次由QuorumPeer调用FastleaderElection.lookForLeader方法，选出leader。仔细看line:1025-1049。
+			FastleaderElection的算法有个好处，减少了节点超半数的判断，需要拿到全部选票，才做判断。这样的好处是更严谨。收敛速度不一定快。   
+**最重要的变化是**：前者通信用的是**UDP协议（WorkerReceiver中用的是DatagramSocket）**，后者是**TCP协议(Socket)**，更稳定。
 ##### pk的规则   
 依次对比三个属性epoch,zxid,sid，出现不相等的情况，大者立刻胜出。
 源码：
