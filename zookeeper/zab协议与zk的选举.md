@@ -28,12 +28,37 @@ zk是基于paxos的分布式应用协调框架。但他的选举算法用的是�
 3. 当发现有节点得到超过一半节点的选择或者节点收到所有其他节点的票时，该节点就退出选举，把状态变为leadding或following，同时把自己的状态广播出去。这一步3.4.0版本有变化。
 	##### 3.4.0之前
 	选举类是AuthFastLeaderElection.java，line907-918，
-			当节点收到所有竞选节点的选票时，则判断自己的选择是否正确，更新自己选票结果，同时广播选票，修改状态，设置相应状态(leadding或following)，退出选举的自旋
-			如果没有收到所有竞选节点选票，就把已收到的选票轮询一遍，看是存在某个节点得到超过一半节点得支持，若存在，设置相应状态(leadding或following)。退出选举的自旋，否则自旋。
+当节点收到所有竞选节点的选票时，则判断自己的选择是否正确，更新自己选票结果，同时广播选票，修改状态，设置相应状态(leadding或following)，退出选举的自旋
+如果没有收到所有竞选节点选票，就把已收到的选票轮询一遍，看是存在某个节点得到超过一半节点得支持，若存在，设置相应状态(leadding或following)。退出选举的自旋，否则自旋。
 	##### 3.4.0之后
-	选举类是FastleaderElection.java中,line：1025行开始，
-			当节点收到所有竞选节点的选票时，再次判断自己的选票是否正确，判断方法是通过轮询recvqueue中的选票，是否有比当前持有选票更优的选票，如果没有，则退出选举，设置相应状态(leadding或following)，退出选举的自旋。否则不改变状态，仍然为looking状态，再次由QuorumPeer调用FastleaderElection.lookForLeader方法，选出leader。仔细看line:1025-1049。
-			FastleaderElection的算法有个好处，减少了节点超半数的判断，需要拿到全部选票，才做判断。这样的好处是更严谨。收敛速度不一定快。   
+	选举类是FastleaderElection.java中,line：1025行开始当节点收到所有竞选节点的选票时，再次判断自己的选票是否正确，判断方法是通过轮询recvqueue中的选票，是否有比当前持有选票更优的选票，如果没有，则退出选举，设置相应状态(leadding或following)，退出选举的自旋。否则不改变状态，仍然为looking状态，再次由QuorumPeer调用FastleaderElection.lookForLeader方法，选出leader。仔细看line:1025-1049。  
+			
+			
+		`if (voteSet.hasAllQuorums()) { //是否获得所有竞选节点选票
+			// Verify if there is any change in the proposed leader
+			while((n = recvqueue.poll(finalizeWait,
+					TimeUnit.MILLISECONDS)) != null){  **  //进入自旋**
+				if(totalOrderPredicate(n.leader, n.zxid, n.peerEpoch,
+						proposedLeader, proposedZxid, proposedEpoch)){
+					recvqueue.put(n);
+					break;
+				}
+			}
+                            /*
+                             * This predicate is true once we don't read any new
+                             * relevant message from the reception queue
+                             */
+                            if (n == null) { //不需要改变自己的选票
+                                setPeerState(proposedLeader, voteSet);
+                                Vote endVote = new Vote(proposedLeader,
+                                        proposedZxid, logicalclock.get(), 
+                                        proposedEpoch);
+                                leaveInstance(endVote);
+                                return endVote;
+                            }
+                        }
+                        break;`
+FastleaderElection的算法有个好处，减少了节点超半数的判断，需要拿到全部选票，才做判断。这样的好处是更严谨。收敛速度不一定快。   
 **最重要的变化是**：前者通信用的是**UDP协议（WorkerReceiver中用的是DatagramSocket）**，后者是**TCP协议(Socket)**，更稳定。
 ##### pk的规则   
 依次对比三个属性epoch,zxid,sid，出现不相等的情况，大者立刻胜出。
@@ -50,6 +75,21 @@ zk是基于paxos的分布式应用协调框架。但他的选举算法用的是�
         return ((newEpoch > curEpoch) ||
                 ((newEpoch == curEpoch) &&
                 ((newZxid > curZxid) || ((newZxid == curZxid) && (newId > curId)))));
+##### FLE演算示意图
+[![FLE选举演算示意图](https://github.com/flysnow911/Blogs/blob/master/imgs/FLE%E9%80%89%E4%B8%BE%E6%BC%94%E7%AE%97%E5%9B%BE.png "FLE选举演算示意图")](https://github.com/flysnow911/Blogs/blob/master/imgs/FLE%E9%80%89%E4%B8%BE%E6%BC%94%E7%AE%97%E5%9B%BE.png "FLE选举演算示意图")   
+
+从上图可以看出，选举的步骤如下：
+1. 启动阶段,按照协议，大家都给自己投票，选自己为leader。并且广播自己的选票。
+2. T1时刻，S1收到S2的选票，S1 PK失败，修改自己的选票，选择S2为leader,广播新选票。
+3. T2时刻，S1收到S3的选票，S1 PK失败，修改自己的选票，选择S3为leader.然后发现自己已经获取所有竞选节点的选票，所以在T2阶段进入自旋阶段，等待剩下选票，看是否需要修改自己选票。
+4. T5+${finalizeWait}时刻，S1自旋超时，发现不需要修改自己的选票，所以退出自旋，同时把QuorumPeer的状态设为Following，退出选举。 
+5. S2从初始阶段到T3之间，与S1 PK胜出，不需要修改选票。
+6. S2直到T3时刻,与S3 PK失败，修改自己的选票，选择S3为leader.   
+7. S2发现自己已经获取所有竞选节点的选票，在T3阶段进入自旋阶段，等待剩下选票，看是否需要修改自己选票.
+8. S2在T6+${finalizeWait}时刻，自旋超时，发现不需要修改自己的选票，所以退出自旋，同时把QuorumPeer的状态设为Following，退出选举。  
+8. S3从初始阶段到T4之间，与S1,S2 PK胜出，不需要修改选票。  
+9. S3在T4时刻,已经获取所有竞选节点的选票，在T4阶段进入自旋阶段，等待剩下选票，看是否需要修改自己选票。
+10.S3在T7+${finalizeWait}时刻，自旋超时，发现不需要修改自己的选票，所以退出自旋，同时把QuorumPeer的状态设为Leading，退出选举。
 
 ## 选举过程中异常问题的处理
 异常问题的处理能看出一个系统是否健壮，同时也是一个优秀系统的必备功能。
