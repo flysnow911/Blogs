@@ -37,7 +37,7 @@ zk是基于paxos的分布式应用协调框架。但他的选举算法用的是�
 		`if (voteSet.hasAllQuorums()) { //是否获得所有竞选节点选票
 			// Verify if there is any change in the proposed leader
 			//进入自旋, 自上次从队列取出数据时间T到T+finalizeWait时刻，队列中无数据的情况下，超时退出自旋。
-			while((n = recvqueue.poll(finalizeWait,
+		     while((n = recvqueue.poll(finalizeWait,
 					TimeUnit.MILLISECONDS)) != null){ 
 				if(totalOrderPredicate(n.leader, n.zxid, n.peerEpoch,
 						proposedLeader, proposedZxid, proposedEpoch)){
@@ -45,20 +45,20 @@ zk是基于paxos的分布式应用协调框架。但他的选举算法用的是�
 					break;
 				}
 			}
-                            /*
-                             * This predicate is true once we don't read any new
-                             * relevant message from the reception queue
-                             */
-                            if (n == null) { //不需要改变自己的选票
-                                setPeerState(proposedLeader, voteSet);
-                                Vote endVote = new Vote(proposedLeader,
-                                        proposedZxid, logicalclock.get(), 
-                                        proposedEpoch);
-                                leaveInstance(endVote);
-                                return endVote;
-                            }
-                        }
-                        break;`
+		     /*
+		     * This predicate is true once we don't read any new
+		     * relevant message from the reception queue
+		     */
+		     if (n == null) { //不需要改变自己的选票
+			setPeerState(proposedLeader, voteSet);
+			Vote endVote = new Vote(proposedLeader,
+				proposedZxid, logicalclock.get(), 
+				proposedEpoch);
+			leaveInstance(endVote);
+			return endVote;
+		     }
+		 }
+		break;`
 FastleaderElection的算法有个好处，减少了节点超半数的判断，需要拿到全部选票，才做判断。这样的好处是更严谨。收敛速度不一定快。   
 **最重要的变化是**：前者通信用的是**UDP协议（WorkerReceiver中用的是DatagramSocket）**，后者是**TCP协议(Socket)**，更稳定。
 ##### pk的规则   
