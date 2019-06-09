@@ -22,3 +22,5 @@ zookeeper代码下载后怎么debug呢？嘿嘿，本文就是介绍如何debug 
 	- 	  adminServer.start： JettyAdminServer,启动后台管理，接收commands应用。
 	- 	  startLeaderElection：开始竞选。
 	- 	  run(): 内旋，依据state四种状态，决定循环什么操作。
+
+[![zk启动主流程](https://github.com/flysnow911/Blogs/blob/master/imgs/zookeeper%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.png "zk启动主流程")](https://github.com/flysnow911/Blogs/blob/master/imgs/zookeeper%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.png "zk启动主流程")
