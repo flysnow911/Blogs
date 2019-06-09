@@ -15,7 +15,9 @@ zookeeper代码下载后怎么debug呢？嘿嘿，本文就是介绍如何debug 
 3. 加载配置文件 -> 
 4. 依靠配置文件初始化QuorumPeer(管理竞选协议)
 5. 接下来就是主流程
-	- 	  loadDataBase()：data/version-2/中加载相关文件, 镜像和日志路径中反序列化数据DataTree中，返回最大事务ID，事务所属时代，当前时代，接收的时代涉及到的文件有：acceptedEpoch,currentEpoch,log.400000002,snapshot.3003aa11
+	- 	  loadDataBase()：data/version-2/中加载相关文件, 镜像和日志路径中反序列化数据DataTree中，
+			返回最大事务ID，事务所属时代，当前时代，接收的时代涉及到的文件有:acceptedEpoch,currentEpoch,
+			log.400000002,snapshot.3003aa11
 	- 	  startServerCnxnFactory：启动连接工厂，初始化连接池，这个连接主要用来监听客户端请求。
 	- 	  adminServer.start： JettyAdminServer,启动后台管理，接收commands应用。
 	- 	  startLeaderElection：开始竞选。
