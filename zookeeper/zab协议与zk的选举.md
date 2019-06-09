@@ -36,8 +36,9 @@ zk是基于paxos的分布式应用协调框架。但他的选举算法用的是�
 			
 		`if (voteSet.hasAllQuorums()) { //是否获得所有竞选节点选票
 			// Verify if there is any change in the proposed leader
+			//进入自旋, 自上次从队列取出数据时间T到T+finalizeWait时刻，队列中无数据的情况下，超时退出自旋。
 			while((n = recvqueue.poll(finalizeWait,
-					TimeUnit.MILLISECONDS)) != null){  **  //进入自旋**
+					TimeUnit.MILLISECONDS)) != null){ 
 				if(totalOrderPredicate(n.leader, n.zxid, n.peerEpoch,
 						proposedLeader, proposedZxid, proposedEpoch)){
 					recvqueue.put(n);
