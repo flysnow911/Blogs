@@ -54,13 +54,13 @@ pk的规则，依次对比三个属性epoch,zxid,sid，出现不相等的情况�
 异常问题的处理能看出一个系统是否健壮，同时也是一个优秀系统的必备功能。
 #### 1). 选举过程中，新的Server加入
 当一个Server启动时它都会发起一次选举，此时由选举线程发起相关流程，那么每个Server都会获得当前zxid最大的那个server，如果本次最大的Server没有获得n/2+1 个票数，那么下一次投票时，他将向zxid最大的Server投票，重复以上流程，最后一定能选举出一个Leader。
-####2). 选举过程中，Server退出
+#### 2). 选举过程中，Server退出  
 只要保证n/2+1个Server存活zk service仍可以正确工作，
 如果少于n/2+1个Server 存活就没办法选出Leader。
-####3). 选举过程中或选举完成后，Leader死亡
+#### 3). 选举过程中或选举完成后，Leader死亡  
 当选举出Leader以后，其他server已经处于FLLOWING 状态，本次选主过程正常进行。
 当选主完成后，所有的Fllower都会向Leader发送Ping消息，如果无法ping通，就改变自己的状为(FLLOWING ==> LOOKING)，发起新的一轮选举。
-####4). 双主问题
+#### 4). 双主问题  
 当Follower无法ping通Leader时就认为Leader已经出问题开始重新选举，Leader收到Follower的ping没有达到半数以上则要退出Leader重新选举。
 
 
