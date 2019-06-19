@@ -1,9 +1,25 @@
-转一篇博客。
-浓缩内容：mysql提供的'utf8'不是真正的我们认知的4字节的utf-8编码，mysql的'utf8'最大3字节，   
-很多字符是不支持的，容易出现乱码。MySQL在 5.5.3才支持4字节的uft-8, 在mysql叫‘utf8mb4’，   
-所以文章标题可以改成‘记住，mysql不要使用utf8，要用utf8mb4！’。
-具体为什么utf8最多只有3字节，主要是历史原因。想了解的可以参考以下
-https://www.infoq.cn/article/in-mysql-never-use-utf8-use-utf8
+网上对于apollo与其他配置中心对比，并且选择apollo的帖子太多了，这里不赘述。
+由于修改过apollo的源码，并且部门也全面应用了apollo,所以对apollo了解比较深入。
+这里就说说从更深入的角度，聊聊apollo.
 
-另，现有工程想从utf8 转变成utf8mb4的，可以参考以下文章。
-https://mathiasbynens.be/notes/mysql-utf8mb4#utf8-to-utf8mb4
+## 高容错,高可用
+1. namespace没有配置没关系，会帮你默认加载application下的配置。
+2. apollo服务宕机没关系(哪怕所有服务都宕机了，也没关系)，apollo的客户端早就帮应用缓存了一份配置在本地，并且一直是动态更新的。利用springcloud全家桶，解决了微服务化的apollo所有架构需求。
+3. 减少了很多外部依赖，如etcd,zk。
+4. 服务都是无状态的。
+## 高性能
+4C8G虚拟机，能支撑10000个连接。每个客户端一个长连接，一个configService服务可以满足一万个app节点需求。
+	
+	
+	原理：巧妙地实现了长连接。利用spring DeferredResult实现异步化，维持一个长连接。
+		一般实现长连接的方式：
+		1. 	WatchDog机制，定时任务。客户端向Server发送包，告知保持连接。
+		2. 	客户端向Server发送包，告知保持连接。
+		3. 	服务器端需要一个检测机制，在一定时间(receiveTimeDelay)内，如果没有检测到客户端的请求，就断开连接。
+		
+## 配置同步延迟低
+	client和server通过保持长连接，维护一套推拉模式，争取在最短的时间内保持配置的一致性。
+	client与server保持长连接，单开一个线程池，里面只有一个线程，定时轮询是否有更新，这是主动拉的过程。
+	推送过程：提供配置查询的接口是DeferredResult。
+## 开源，社区活跃
+	由于开源，我们加入加入或完善了不少功能，如生产配置的脱敏，配置对比，跨版本回滚，审计功能，批量导入等功能。
