@@ -1,0 +1,3 @@
+NIO:非阻塞IO，利用selector，Channel,Buffer实现多路复用，零拷贝，非阻塞IO。
+	相比传统IO，更加节省资源，性能更高。
+NIO与传统IO的区别:
