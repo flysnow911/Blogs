@@ -10,6 +10,7 @@ Virtual Extensible Lan 虚拟可扩展局域网，linux本身就支持的一种�
 
 1.docker0在路由一番，发现数据需要发送给flannel.1。参考ip route命令结果。
 	出容器的数据包结构
+	<img width="150" height="150" src="https://github.com/flysnow911/Blogs/blob/master/imgs/containerdata.png"/>
 	[![容器发出数据格式](https://github.com/flysnow911/Blogs/blob/master/imgs/containerdata.png "容器发出数据格式")](https://github.com/flysnow911/Blogs/blob/master/imgs/containerdata.png "容器发出数据格式")      
 	
 2.flannel通过*目的容器ip地址*，查询到*目的VTEP mac地址*
