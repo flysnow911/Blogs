@@ -4,17 +4,21 @@ Virtual Extensible Lan 虚拟可扩展局域网，linux本身就支持的一种�
 -->发送端，数据从容器出来后，用户态进入内核，直到从网卡发出去，处理内核态，而udp模式，需要3次切换。  
 需要VTEP设备来实现，取得目标主机地址，目标vtep mac地址。 
 
-如下图container-1中数据经过进入docker0, 
+如下图container-1中数据经过进入docker0, fannel.1, 经过vxlan的两层封包，发数据。
 1.docker0在路由一番，发现数据需要发送给flannel.1。参考ip route命令结果。
 	出容器的数据包结构
+	[![容器发出数据格式](https://github.com/flysnow911/Blogs/blob/master/imgs/containerdata.png "容器发出数据格式")](https://github.com/flysnow911/Blogs/blob/master/imgs/containerdata.png "容器发出数据格式")
 2.flannel通过*目的容器ip地址*，查询到*目的VTEP mac地址*
 	二层封包结果：
+	[![二层封包数据](https://github.com/flysnow911/Blogs/blob/master/imgs/vtep.png "二层封包数据")](https://github.com/flysnow911/Blogs/blob/master/imgs/vtep.png "二层封包数据")
 3.fannel.1中维护了VTEP mac地址，可以通过vtep mac路由查到*目的主机ip*。此时数据加上目的主机ip地址。
 4.这一步与vtep没关系了。就是依据目标ip地址，路由到网卡。
-从网卡发出去的数据包如下图所示：   
+从网卡发出去的数据包如下图所示： 
+	[![网络数据](https://github.com/flysnow911/Blogs/blob/master/imgs/vxlan_data_format.png "网络数据")](https://github.com/flysnow911/Blogs/blob/master/imgs/vxlan_data_format.png "网络数据")
 
 以上是发送数据的过程，接收流程正好相反的过程。
 
+以下是我k8s的环境，数据，供流程演绎参考。
 [root@master ~]# ip route //对应步骤1.
 default via 192.168.2.1 dev ens33 proto static metric 100 
 10.244.0.0/24 dev cni0 proto kernel scope link src 10.244.0.1 
