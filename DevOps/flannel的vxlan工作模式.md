@@ -29,63 +29,68 @@ Virtual Extensible Lan 虚拟可扩展局域网，linux本身就支持的一种�
 
 ------------------数据区------------------   
 以下是我k8s的环境，数据，供流程演绎参考。   
-[root@master ~]# ip route //对应步骤1.   
-default via 192.168.2.1 dev ens33 proto static metric 100    
-10.244.0.0/24 dev cni0 proto kernel scope link src 10.244.0.1    
-10.244.1.0/24 via 10.244.1.0 dev flannel.1 onlink    
-10.244.2.0/24 via 10.244.2.0 dev flannel.1 onlink     
-172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1     
-192.168.2.0/24 dev ens33 proto kernel scope link src 192.168.2.200 metric 100     
 
+##### 对应步骤1：
 
+    [root@master ~]# ip route 
+    default via 192.168.2.1 dev ens33 proto static metric 100    
+    10.244.0.0/24 dev cni0 proto kernel scope link src 10.244.0.1    
+    10.244.1.0/24 via 10.244.1.0 dev flannel.1 onlink    
+    10.244.2.0/24 via 10.244.2.0 dev flannel.1 onlink     
+    172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1     
+    192.168.2.0/24 dev ens33 proto kernel scope link src 192.168.2.200 metric 100 '
 
+##### 对应步骤2：
 
-[root@master ~]# ip neigh show dev flannel.1 //对应步骤2.    
-10.244.2.0 lladdr 86:22:66:41:77:3d PERMANENT    
-10.244.1.0 lladdr 92:1b:d8:d1:19:96 PERMANENT    
+    [root@master ~]# ip neigh show dev flannel.1     
+    10.244.2.0 lladdr 86:22:66:41:77:3d PERMANENT    
+    10.244.1.0 lladdr 92:1b:d8:d1:19:96 PERMANENT    
 
-[root@master ~]# bridge fdb show flannel.1  //对应步骤3.   
-01:00:5e:00:00:01 dev ens33 self permanent   
-33:33:00:00:00:01 dev ens33 self permanent   
-33:33:ff:9e:56:25 dev ens33 self permanent   
-01:00:5e:00:00:01 dev ens34 self permanent   
-33:33:00:00:00:01 dev ens34 self permanent   
-33:33:00:00:00:01 dev docker0 self permanent   
-01:00:5e:00:00:01 dev docker0 self permanent   
-33:33:ff:08:59:b7 dev docker0 self permanent   
-02:42:70:08:59:b7 dev docker0 vlan 1 master docker0 permanent   
-02:42:70:08:59:b7 dev docker0 master docker0 permanent   
-ca:59:7d:c2:5e:0f dev flannel.1 dst 192.168.2.202 self permanent   
-86:22:66:41:77:3d dev flannel.1 dst 192.168.2.202 self permanent   
-92:1b:d8:d1:19:96 dev flannel.1 dst 192.168.2.201 self permanent   
-f2:21:6b:d8:af:b0 dev flannel.1 dst 192.168.2.201 self permanent   
-33:33:00:00:00:01 dev cni0 self permanent   
-01:00:5e:00:00:01 dev cni0 self permanent   
-33:33:ff:f7:3e:9c dev cni0 self permanent   
-86:61:8c:f7:3e:9c dev cni0 master cni0 permanent   
-86:61:8c:f7:3e:9c dev cni0 vlan 1 master cni0 permanent   
-a6:7d:24:57:30:ef dev veth375d278 master docker0 permanent    
-a6:7d:24:57:30:ef dev veth375d278 vlan 1 master docker0 permanent   
-33:33:00:00:00:01 dev veth375d278 self permanent   
-01:00:5e:00:00:01 dev veth375d278 self permanent   
-33:33:ff:57:30:ef dev veth375d278 self permanent    
-a6:c7:13:10:52:8a dev veth8ea02941 vlan 1 master cni0 permanent    
-7a:74:56:6b:40:e8 dev veth8ea02941 master cni0     
-a6:c7:13:10:52:8a dev veth8ea02941 master cni0 permanent   
-33:33:00:00:00:01 dev veth8ea02941 self permanent   
-01:00:5e:00:00:01 dev veth8ea02941 self permanent   
-33:33:ff:10:52:8a dev veth8ea02941 self permanent    
-5a:37:b4:50:54:92 dev vethfcef72c2 master cni0 permanent    
-06:aa:68:89:d6:17 dev vethfcef72c2 master cni0     
-5a:37:b4:50:54:92 dev vethfcef72c2 vlan 1 master cni0 permanent    
-33:33:00:00:00:01 dev vethfcef72c2 self permanent    
-01:00:5e:00:00:01 dev vethfcef72c2 self permanent    
-33:33:ff:50:54:92 dev vethfcef72c2 self permanent    
+##### 对应步骤3：
 
-[root@master ~]# ip route //对应步骤4.    
-default via 192.168.2.1 dev ens33 proto static metric 100     
-10.244.0.0/24 dev cni0 proto kernel scope link src 10.244.0.1     
-10.244.1.0/24 via 10.244.1.0 dev flannel.1 onlink         
-10.244.2.0/24 via 10.244.2.0 dev flannel.1 onlink     
-172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 
-192.168.2.0/24 dev ens33 proto kernel scope link src 192.168.2.200 metric 100 
+    [root@master ~]# bridge fdb show flannel.1   
+    01:00:5e:00:00:01 dev ens33 self permanent   
+    33:33:00:00:00:01 dev ens33 self permanent   
+    33:33:ff:9e:56:25 dev ens33 self permanent   
+    01:00:5e:00:00:01 dev ens34 self permanent   
+    33:33:00:00:00:01 dev ens34 self permanent   
+    33:33:00:00:00:01 dev docker0 self permanent   
+    01:00:5e:00:00:01 dev docker0 self permanent   
+    33:33:ff:08:59:b7 dev docker0 self permanent   
+    02:42:70:08:59:b7 dev docker0 vlan 1 master docker0 permanent   
+    02:42:70:08:59:b7 dev docker0 master docker0 permanent   
+    ca:59:7d:c2:5e:0f dev flannel.1 dst 192.168.2.202 self permanent   
+    86:22:66:41:77:3d dev flannel.1 dst 192.168.2.202 self permanent   
+    92:1b:d8:d1:19:96 dev flannel.1 dst 192.168.2.201 self permanent   
+    f2:21:6b:d8:af:b0 dev flannel.1 dst 192.168.2.201 self permanent   
+    33:33:00:00:00:01 dev cni0 self permanent   
+    01:00:5e:00:00:01 dev cni0 self permanent   
+    33:33:ff:f7:3e:9c dev cni0 self permanent   
+    86:61:8c:f7:3e:9c dev cni0 master cni0 permanent   
+    86:61:8c:f7:3e:9c dev cni0 vlan 1 master cni0 permanent   
+    a6:7d:24:57:30:ef dev veth375d278 master docker0 permanent    
+    a6:7d:24:57:30:ef dev veth375d278 vlan 1 master docker0 permanent   
+    33:33:00:00:00:01 dev veth375d278 self permanent   
+    01:00:5e:00:00:01 dev veth375d278 self permanent   
+    33:33:ff:57:30:ef dev veth375d278 self permanent    
+    a6:c7:13:10:52:8a dev veth8ea02941 vlan 1 master cni0 permanent    
+    7a:74:56:6b:40:e8 dev veth8ea02941 master cni0     
+    a6:c7:13:10:52:8a dev veth8ea02941 master cni0 permanent   
+    33:33:00:00:00:01 dev veth8ea02941 self permanent   
+    01:00:5e:00:00:01 dev veth8ea02941 self permanent   
+    33:33:ff:10:52:8a dev veth8ea02941 self permanent    
+    5a:37:b4:50:54:92 dev vethfcef72c2 master cni0 permanent    
+    06:aa:68:89:d6:17 dev vethfcef72c2 master cni0     
+    5a:37:b4:50:54:92 dev vethfcef72c2 vlan 1 master cni0 permanent    
+    33:33:00:00:00:01 dev vethfcef72c2 self permanent    
+    01:00:5e:00:00:01 dev vethfcef72c2 self permanent    
+    33:33:ff:50:54:92 dev vethfcef72c2 self permanent    
+
+##### 对应步骤4
+    [root@master ~]# ip route     
+    default via 192.168.2.1 dev ens33 proto static metric 100     
+    10.244.0.0/24 dev cni0 proto kernel scope link src 10.244.0.1     
+    10.244.1.0/24 via 10.244.1.0 dev flannel.1 onlink         
+    10.244.2.0/24 via 10.244.2.0 dev flannel.1 onlink     
+    172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 
+    192.168.2.0/24 dev ens33 proto kernel scope link src 192.168.2.200 metric 100 
