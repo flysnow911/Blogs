@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: basic-ingress
+  namespace: development
+spec:
+  rules:
+  - host: say-hello.dev.com 
+    http:
+      paths: 
+      - path: /
+        backend:
+          serviceName: say-hello-service
+          servicePort: 80

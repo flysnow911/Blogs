@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: say-hello-dev
+  namespace: development
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: say-hello-dev
+  template:
+    metadata:
+      labels:
+        app: say-hello-dev
+    spec:
+      containers:
+      - name: say-hello-dev
+        image: registry:5000/app-hello-world:0.0.1-release
+        ports:
+        - containerPort: 8080
