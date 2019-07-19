@@ -1,12 +1,15 @@
-VXLAN模式
-Virtual Extensible Lan 虚拟可扩展局域网，linux本身就支持的一种网络虚拟技术。
+## VXLAN模式
+Virtual Extensible Lan 虚拟可扩展局域网，linux本身就支持的一种网络虚拟技术。   
 -->VXLAN完全在内核态实现上述封装和解封装的工作，与upd模式类似，构建Overlay Network，工作在一个三层网络的二层overlay network。
 -->发送端，数据从容器出来后，用户态进入内核，直到从网卡发出去，处理内核态，而udp模式，需要3次切换。  
 需要VTEP设备来实现，取得目标主机地址，目标vtep mac地址。 
 
 如下图container-1中数据经过进入docker0, fannel.1, 经过vxlan的两层封包，发数据。   
 	
-[![data_flow_vxlan](https://github.com/flysnow911/Blogs/blob/master/imgs/vxlandataflow.png "data_flow_vxlan")](https://github.com/flysnow911/Blogs/blob/master/imgs/vxlandataflow.png "data_flow_vxlan")
+[![data_flow_vxlan](https://github.com/flysnow911/Blogs/blob/master/imgs/vxlandataflow.png "data_flow_vxlan")](https://github.com/flysnow911/Blogs/blob/master/imgs/vxlandataflow.png "data_flow_vxlan")   
+
+### 以下是详细流程：
+
 1.docker0在路由一番，发现数据需要发送给flannel.1. 参考ip route命令结果。
 	出容器的数据包结构
 	<img width="300" height="180" src="https://github.com/flysnow911/Blogs/blob/master/imgs/containerdata.png"/>
@@ -23,6 +26,7 @@ Virtual Extensible Lan 虚拟可扩展局域网，linux本身就支持的一种�
 	
 以上是发送数据的过程，接收流程正好相反的过程。
 
+------------------数据区------------------
 以下是我k8s的环境，数据，供流程演绎参考。
 [root@master ~]# ip route //对应步骤1.
 default via 192.168.2.1 dev ens33 proto static metric 100 
