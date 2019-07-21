@@ -50,12 +50,12 @@ calico的路由信息是实时发现的。BGP client之间一直维护了着通�
   
   [![](https://github.com/flysnow911/Blogs/blob/master/imgs/calico_ipip_payload.png)](https://github.com/flysnow911/Blogs/blob/master/imgs/calico_ipip_payload.png)
 ###   IPIP劣势
-     额外的一次封包拆包，性能损失与vxlan差不多。所以建议适合主机在同一网段的场景使用。
-	 在公有云的情况下，宿主机之间的网关是不允许用户干涉，所以这不能使用。
+     1.额外的一次封包拆包，性能损失与vxlan差不多。所以建议适合主机在同一网段的场景使用。   
+     2.在公有云的情况下，宿主机之间的网关是不允许用户干涉，所以这不能使用。
 ## 总结
-	三层网络方案要维护的路由规则比较多，故障概率高，排查困难。
-	在公有云，用更简单的flannel host ws模式。
-	私有云，更推荐calico，因为calico能够覆盖更多的场景。
+	1.三层网络方案要维护的路由规则比较多，故障概率高，排查困难。
+	2.在公有云，用更简单的flannel host ws模式。
+	3.私有云，更推荐calico，因为calico能够覆盖更多的场景。
   
   
   
